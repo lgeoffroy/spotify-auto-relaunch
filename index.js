@@ -16,7 +16,7 @@ const getCurrentTrackInfos = () => fetch('https://api.spotify.com/v1/me/player/c
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const play = () => exec('/usr/bin/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Play');
-const relaunch = () => exec('/usr/bin/killall spotify && /usr/bin/spotify');
+const relaunch = () => exec('/usr/bin/killall spotify && /usr/bin/spotify &');
 
 const skipAd = async () => {
   relaunch();
@@ -35,6 +35,12 @@ const main = async () => {
   try {
     const trackInfos = await getCurrentTrackInfos();
 
+    if (trackInfos.error && trackInfos.error.status === 401) {
+      console.log('Seems like the code is invalid. Please regenerate it here:');
+      console.log('https://developer.spotify.com/console/get-users-currently-playing-track/?market=&additional_types=');
+      process.exit(1)
+    }
+
     const isTrack = trackInfos.currently_playing_type === 'track';
     console.log(`${(new Date()).toLocaleString()}: playing a ${trackInfos.currently_playing_type}`);
 
@@ -50,11 +56,6 @@ const main = async () => {
     if (error.type === 'invalid-json') {
       console.log('Nothing playing.');
       await sleep(10000); // 10s
-    } else {
-      console.error(error);
-      console.log('Seems like the code is invalid. Please regenerate it here:');
-      console.log('https://developer.spotify.com/console/get-users-currently-playing-track/?market=&additional_types=');
-      await sleep(180000); // 3mn
     }
   }
 };
