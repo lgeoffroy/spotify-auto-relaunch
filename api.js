@@ -10,7 +10,7 @@ class SpotifyApi {
     clearInterval(this.interval);
     this.interval = setInterval(async () => {
       if (this.fetchEpoch + (this.expiresIn * 1000) <= Date.now()) {
-        await this.refreshToken();
+        await this.refreshAccessToken();
       }
     }, 5000);
   }
@@ -69,7 +69,7 @@ class SpotifyApi {
     this.refreshToken = data.refresh_token;
   }
 
-  async refreshToken() {
+  async refreshAccessToken() {
     this.fetchEpoch = Date.now();
     const data = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',

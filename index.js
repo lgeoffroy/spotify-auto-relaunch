@@ -29,7 +29,7 @@ const main = async () => {
   } catch (error) {
     if (error.type === 'invalid-json') {
       console.log('Nothing playing.');
-      await sleep(10000); // 10s
+      await sleep(60 * 1000); // Nothing playing, wait 1 mn before retrying.
     } else {
       console.log(error);
       process.exit(1)

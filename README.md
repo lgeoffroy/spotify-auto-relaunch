@@ -9,6 +9,5 @@ You're all set! Launch the app with `node index.js`.
 ### TODO:
 
 - Wait for spotify to be ready instead of waiting a few seconds
-- Hide/minimize spotify on relaunch
 - Better handle errors
 - Completely rewrite using only dbus?...

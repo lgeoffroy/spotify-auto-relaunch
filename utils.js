@@ -14,11 +14,13 @@ const navigate = async (page, url) => Promise.all([
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const play = () => exec('/usr/bin/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Play');
 const relaunchSpotify = () => exec('/usr/bin/killall spotify && /usr/bin/nohup /usr/share/spotify/spotify &');
+const minimize = () => exec('/usr/bin/xdotool search --onlyvisible --classname "spotify" windowminimize');
 
 const skipAd = async () => {
   relaunchSpotify();
   await sleep(5000);
   play();
+  minimize();
 };
 
 const displayTime = (ms) => {
