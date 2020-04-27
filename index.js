@@ -16,7 +16,7 @@ const main = async () => {
     }
 
     const isTrack = trackInfos.currently_playing_type === 'track';
-    console.log(`${(new Date()).toLocaleString()}: playing a ${trackInfos.currently_playing_type}`);
+    console.log(`${(new Date()).toLocaleString('fr')}: playing a ${trackInfos.currently_playing_type}`);
 
     if (isTrack) {
       console.log(`${trackInfos.item.artists[0].name} - ${trackInfos.item.name} (${displayTime(trackInfos.progress_ms)} / ${displayTime(trackInfos.item.duration_ms)})`)
