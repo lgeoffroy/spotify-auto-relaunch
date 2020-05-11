@@ -25,8 +25,8 @@ const skipAd = async () => {
 };
 
 const displayTime = (ms) => {
-  const s = (ms / 1000).toFixed(0);
-  const m = s / 60;
+  const s = Math.floor(ms / 1000).toFixed(0);
+  const m = Math.floor(s / 60);
 
   return `${m.toFixed(0)}:${`${s % 60}`.padStart(2, '0')}`;
 };
